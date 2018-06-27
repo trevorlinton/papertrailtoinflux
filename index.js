@@ -40,7 +40,6 @@ const server = http.createServer((req, res) => {
 					points.push({measurement:name, tags:{host:count.source_name}, fields:{count:count.timeseries[series]}, timestamp:series})
 				})
 			})
-			console.log('writing points:', points)
 			influxdb.writePoints(points, {database:config.database, retentialPolicy:'4w', precision:'s'}).catch((e) => console.error(e))
 			res.writeHead(200, {'content-type':'text/plain'})
 			res.end('')
